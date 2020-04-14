@@ -1,0 +1,35 @@
+swagger: "2.0"
+info:
+  description: idk
+  version: "19.11.0"
+  title: TravelStorms Main API Gateway
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/ts-weather"
+
+# Paths supported by the server application
+paths:
+  /routeForcast:
+    post:
+      operationId: route_forcast.getData
+      tags:
+        - "Weather"
+      summary: Create a person and add it to the people list
+      description: Create a new person in the people list
+      parameters:
+        - name: geo_list
+          in: body
+          description: Person to create
+          required: True
+        - name: trans_id
+          in: body
+          description: trans_id
+          required: True
+
+
+      responses:
+        200:
+          description: Successfully created person in list
