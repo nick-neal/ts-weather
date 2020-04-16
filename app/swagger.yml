@@ -12,24 +12,29 @@ basePath: "/ts-weather"
 
 # Paths supported by the server application
 paths:
-  /routeForcast:
-    post:
+  /routeForcast/{lat}/{lon}/{trans_id}:
+    get:
       operationId: route_forcast.getData
       tags:
         - "Weather"
       summary: Create a person and add it to the people list
       description: Create a new person in the people list
       parameters:
-        - name: geo_list
-          in: body
-          description: Person to create
+        - name: lat
+          in: path
+          description: lattitude
+          type: string
+          required: True
+        - name: lon
+          in: path
+          description: longitude
+          type: string
           required: True
         - name: trans_id
-          in: body
+          in: path
           description: trans_id
+          type: string
           required: True
-
-
       responses:
         200:
           description: Successfully created person in list
