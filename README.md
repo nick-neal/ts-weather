@@ -4,6 +4,20 @@
 
 This is the micro service that retrieves weather data from the dark sky API for specific geo-coordinates.
 
+## setting up API KEYS
+Due to security, you will need to create a new file: `app/config/tskeys.py`
+
+add the following to the new file:
+
+```
+from config.tsconfig import APP_ENV
+
+### API KEYS ###
+
+if APP_ENV == "DEV":
+    DARK_SKIES_API_KEY = '<Dark Skies API Key>'
+```
+
 ## Running in docker
 
 **You will need docker installed on your computer to run the code**

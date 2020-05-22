@@ -8,7 +8,7 @@ build:
 	docker build -t $(IMAGE_NAME) .
 
 run:
-	docker run --rm -p 4082:4082 -e PORT="4082" --name $(CONTAINER_NAME) $(IMAGE_NAME)
+	docker run --rm -p 4082:4082 -e PORT="4082" -e APP_ENV="DEV" --name $(CONTAINER_NAME) $(IMAGE_NAME)
 
 inspect:
 	docker exec -it $(CONTAINER_NAME) /bin/sh

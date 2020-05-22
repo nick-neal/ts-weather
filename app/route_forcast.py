@@ -3,15 +3,11 @@ import requests
 from requests.exceptions import HTTPError
 import logging
 import base64
+from config.tsurls import DARK_SKIES_URL
+from config.tskeys import DARK_SKIES_API_KEY
 
 # initialize logger for app
 logger = logging.getLogger(__name__)
-
-# set constant vars
-DARK_SKIES_URL = 'https://api.darksky.net'
-# !!! SETUP IN CONFIG !!!
-DARK_SKIES_API_KEY = '5561ed9c6a5ebbfbd4b04690f92e8c7e'
-
 
 def getData(lat,lon,trans_id):
 
