@@ -11,3 +11,5 @@ else:
 APP_HOST = '0.0.0.0'
 APP_PORT = 4082
 APP_DEBUG = True
+HTTP_CONNECT_TIMEOUT = 1 # set how long before you should giveup on an http connection.
+HTTP_READ_TIMEOUT = 3 # set how long before you should give up on reading a response from an http connection.

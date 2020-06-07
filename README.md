@@ -182,5 +182,5 @@ weather_data -> [] -> windSpeed | float | No Description.
 - [ ] fix logging since gunicorn doesn't use logging class
 - [ ] set up SSL
 - [ ] set up mutual authentication
-- [ ] create config file to store API keys
-- [ ] create config files for webapp settings (request timeout, port, etc...)
+- [x] create config file to store API keys
+- [x] create config files for webapp settings (request timeout, port, etc...)
