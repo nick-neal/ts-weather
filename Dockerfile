@@ -13,4 +13,4 @@ COPY ./app /app
 
 EXPOSE 4082
 
-ENTRYPOINT python3 ./server.py
+ENTRYPOINT python3 ./main.py

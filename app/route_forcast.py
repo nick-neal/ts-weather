@@ -125,7 +125,7 @@ def parseJsonResponse2(lat,lon,jres):
     # strip any weather data from before current time.
     current_time = int(datetime.now(tz=timezone.utc).timestamp())
     for day in jres['forecast']:
-        if day['date_epoch'] < current_time && current_time < (day['date_epoch'] + 86400):
+        if day['date_epoch'] < current_time and current_time < (day['date_epoch'] + 86400):
             for x in day['hourly']:
                 if int(x['time']) >= convertObservationTime(jres['current']['observation_time']):
                     tmp = x
