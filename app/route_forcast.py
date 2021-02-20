@@ -17,7 +17,7 @@ def getData(lat,lon,trans_id):
 
     logger.debug(f'[trans_id: {trans_id}, lat: {lat}, lon: {lon}]')
 
-    weather_data = callForcastAPI(lat,lon,trans_id)
+    weather_data = callForcastAPI2(lat,lon,trans_id)
 
     return weather_data
 

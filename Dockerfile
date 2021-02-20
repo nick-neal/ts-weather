@@ -1,5 +1,5 @@
-FROM tiangolo/meinheld-gunicorn:python3.6-alpine3.8
-#FROM python:3.7.7-alpine3.11
+#FROM tiangolo/meinheld-gunicorn:python3.6-alpine3.8
+FROM python:3.7.7-alpine3.11
 
 RUN mkdir -p /app
 
@@ -13,4 +13,4 @@ COPY ./app /app
 
 EXPOSE 4082
 
-#ENTRYPOINT python3 ./server.py
+ENTRYPOINT python3 ./server.py
