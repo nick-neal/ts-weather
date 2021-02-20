@@ -17,8 +17,8 @@ paths:
       operationId: route_forcast.getData
       tags:
         - "Weather"
-      summary: Create a person and add it to the people list
-      description: Create a new person in the people list
+      summary: Grab weather forecast for route
+      description: Grab weather forecast for route
       parameters:
         - name: lat
           in: path
@@ -37,4 +37,4 @@ paths:
           required: True
       responses:
         200:
-          description: Successfully created person in list
+          description: Weather Results successfully grabbed
