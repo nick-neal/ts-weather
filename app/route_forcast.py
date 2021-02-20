@@ -60,7 +60,7 @@ def callForcastAPI2(lat,lon,trans_id):
             if response.status_code == 200:
                 jres = response.json()
                 logger.info(f'[trans_id: {trans_id}, status: OK')
-                message = parseJsonResponse2(jres)
+                message = parseJsonResponse2(lat,lon,jres)
                 message['status'] = "OK"
 
         return message
