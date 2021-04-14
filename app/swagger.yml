@@ -33,7 +33,7 @@ paths:
         - name: pull_time
           in: path
           description: UTC time for weather data to be pulled for
-          type: int
+          type: integer
           required: True
         - name: trans_id
           in: path

@@ -139,7 +139,6 @@ def parseJsonResponse2(lat,lon,pull_time,jres):
 
 def convert2utc(timestamp,offset):
     # 3600 == 1 hour
-    offset_int = int(offset)
     if int(offset) > 0:
         return int(timestamp) - (int(offset) * 3600)  
     else:
