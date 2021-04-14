@@ -12,7 +12,7 @@ basePath: "/ts-weather"
 
 # Paths supported by the server application
 paths:
-  /routeForcast/{lat}/{lon}/{trans_id}:
+  /routeForcast/{lat}/{lon}/{pull_time}/{trans_id}:
     get:
       operationId: route_forcast.getData
       tags:
