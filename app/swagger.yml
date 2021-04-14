@@ -30,6 +30,11 @@ paths:
           description: longitude
           type: string
           required: True
+        - name: pull_time
+          in: path
+          description: UTC time for weather data to be pulled for
+          type: int
+          required: True
         - name: trans_id
           in: path
           description: trans_id

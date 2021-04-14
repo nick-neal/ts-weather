@@ -13,15 +13,18 @@ from config.tsconfig import HTTP_CONNECT_TIMEOUT, HTTP_READ_TIMEOUT
 # initialize logger for app
 logger = logging.getLogger(__name__)
 
-def getData(lat,lon,trans_id):
+def getData(lat,lon,pull_time,trans_id):
 
     logger.debug(f'[trans_id: {trans_id}, lat: {lat}, lon: {lon}]')
 
-    weather_data = callForcastAPI2(lat,lon,trans_id)
+    # grab certain hour changes, must be UTC
+    #pull_time = request.args.get('time',default=-1)
+
+    weather_data = callForcastAPI2(lat,lon,pull_time,trans_id)
 
     return weather_data
 
-def callForcastAPI2(lat,lon,trans_id):
+def callForcastAPI2(lat,lon,pull_time,trans_id):
 
     message = {"status":"EMPTY"}
     if lat != "" and lon != "":
@@ -60,7 +63,7 @@ def callForcastAPI2(lat,lon,trans_id):
             if response.status_code == 200:
                 jres = response.json()
                 logger.info(f'[trans_id: {trans_id}, status: OK')
-                message = parseJsonResponse2(lat,lon,jres)
+                message = parseJsonResponse2(lat,lon,pull_time,jres)
                 message['status'] = "OK"
 
         return message
@@ -111,36 +114,36 @@ def callForcastAPI(lat,lon,trans_id):
 def cache_location(lat,lon,jres): # Used to start building a location cache system
     return False
 
-def parseJsonResponse2(lat,lon,jres):
+def parseJsonResponse2(lat,lon,pull_time,jres):
     response = {}
 
     response['latitude'] = lat
     response['longitude'] = lon
     response['timezone'] = jres['location']['timezone_id']
-    response['utc_offset'] = jres['location']['utc_offset']
+    utc_offset = jres['location']['utc_offset']
+    response['utc_offset'] = utc_offset
+    response['weather_data'] = {}
 
-    #things are about to get lean here
-    response['weather_data'] = []
-
-    # strip any weather data from before current time.
-    current_time = int(datetime.now(tz=timezone.utc).timestamp())
     for attr, value in jres['forecast'].items():
         day = jres['forecast'][attr]
-        if int(day['date_epoch']) < current_time and current_time < (int(day['date_epoch']) + 86400):
+        if convert2utc(int(day['date_epoch']),int(utc_offset)) < pull_time and pull_time < (convert2utc(int(day['date_epoch']),int(utc_offset)) + 86400):
             for x in day['hourly']:
-                if int(x['time']) >= convertObservationTime(jres['current']['observation_time']):
-                    tmp = x
-                    tmp['time'] = convertEpoch(int(day['date_epoch']), x['time'])
-                    response['weather_data'].append(tmp)
+                if pull_time == (convert2utc(int(day['date_epoch']),int(utc_offset)) + convertTime(int(x['time'])))
+                    response['utc_epoch'] = pull_time
+                    response['weather_data'] = x
+                    break
                 else:
                     continue
-        else:
-            for x in day['hourly']:
-                tmp = x
-                tmp['time'] = convertEpoch(int(day['date_epoch']), x['time'])
-                response['weather_data'].append(tmp)
 
     return response
+
+def convert2utc(timestamp,offset):
+    # 3600 == 1 hour
+    offset_int = int(offset)
+    if int(offset) > 0:
+        return int(timestamp) - (int(offset) * 3600)  
+    else:
+        return int(timestamp) + ((int(offset) * -1) * 3600)
 
 def convertEpoch(date_epoch, hour):
     if hour == '0':
@@ -148,7 +151,11 @@ def convertEpoch(date_epoch, hour):
     else:
         return date_epoch + ((int(hour) / 100) * 3600) # ((24 hour format time) / 100) * (number of sec in an hour)
 
-
+def convertTime(time_bit):
+    if time_bit == 0:
+        return 0
+    else:
+        return time_bit * 36
 
 def convertObservationTime(ot):
     hour = int(ot.split(' ')[0].split(':')[0])
