@@ -128,7 +128,7 @@ def parseJsonResponse2(lat,lon,pull_time,jres):
         day = jres['forecast'][attr]
         if convert2utc(int(day['date_epoch']),int(utc_offset)) < pull_time and pull_time < (convert2utc(int(day['date_epoch']),int(utc_offset)) + 86400):
             for x in day['hourly']:
-                if pull_time == (convert2utc(int(day['date_epoch']),int(utc_offset)) + convertTime(int(x['time'])))
+                if pull_time == (convert2utc(int(day['date_epoch']),int(utc_offset)) + convertTime(int(x['time']))):
                     response['utc_epoch'] = pull_time
                     response['weather_data'] = x
                     break
